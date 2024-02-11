@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+    <title>To Do App</title>
+    <style>
+        .todo-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.todo-table th,
+.todo-table td {
+    padding: 10px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+}
+
+.todo-table th {
+    background-color: #f2f2f2;
+}
+
+.todo-table .not-done {
+    color: red;
+}
+
+.todo-table .done {
+    color: green;
+}
+
+@media (max-width: 768px) {
+    .todo-table th,
+    .todo-table td {
+        padding: 5px;
+    }
+}
+    </style>
+</head>
+
+<body>
+    <div>
+        <h1>To Do List</h1>
+        <form action="/add" method="post">
+            <label>Enter the task</label>
+            <input type="text" name="name">
+            <button type="submit">Add task</button>
+        </form><br><br>
+
+        <table class="todo-table">
+            <thead>
+                <tr>
+                    <th>S.No</th>
+                    <th>Task</th>
+                    <th>Edit</th>
+                    <th>Delete</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for todo in todo_list %}
+                <tr>
+                    <td>{{ todo.id }}</td>
+                    <td>{{ todo.name }}</td>
+                    {% if todo.complete == False %}
+                    <td>Not done</td>
+                    {% else %}
+                    <td>Done</td>
+                    {% endif %}
+                    <td><a href="/update/{{todo.id}}"></a>Update</td>
+                    <td><a href="/delete/{{todo.id}}">Delete</a></td>
+                </tr>
+                {% endfor %}
+            </tbody>
+
+        </table>
+    </div>
+</body>
+
+</html>
